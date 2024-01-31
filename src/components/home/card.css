@@ -1,0 +1,71 @@
+/* styles.css */
+
+.shorter-image {
+    height: 300px;
+    object-fit: cover;
+}
+
+/* hover animation */
+
+.zoom-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.zoom-hover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.zoom-hover:hover img {
+    transform: scale(1.1);
+    filter: blur(3px);
+    border: 2px solid #3498db;
+}
+
+.zoom-hover:hover .image-overlay {
+    opacity: 1;
+}
+
+.zoom-hover:hover .image-border {
+    opacity: 1;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.image-text {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.image-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #3498db;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
