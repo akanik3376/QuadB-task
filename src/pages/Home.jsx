@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import Container from '../Shard/Container';
@@ -21,7 +21,7 @@ const Home = () => {
     return (
         <Container>
             <div className='my-5'>
-                <h2>List of TV Shows</h2>
+                <h2>List of TV Shows </h2>
 
                 {isLoading ? (
                     <p>Loading...</p>

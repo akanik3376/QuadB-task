@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Container from '../../Shard/Container';
 
@@ -14,7 +14,7 @@ const Navbar = () => {
                     <div className="collapse navbar-collapse" id="navbarScroll">
                         <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style={{ '--bs-scroll-height': '100px' }}>
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/" activeClassName="active" exact>
+                                <NavLink className="nav-link" to="/" exact>
                                     Home
                                 </NavLink>
                             </li>

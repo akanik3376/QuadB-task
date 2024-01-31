@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Main from '../layouts/Main';
 import ErrorPage from '../pages/ErrorPage';
 import Home from '../pages/Home';
-
+import Details from '../pages/Details';
 
 const routes = createBrowserRouter([
     {
@@ -12,14 +12,15 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Home />
+                element: <Home />,
             },
             {
-                path: '/about',
-                element: <h3>This is about page</h3>
-            }
-        ]
-    }
-])
+                path: '/details/:id',
+                element: <Details />,
+
+            },
+        ],
+    },
+]);
 
 export default routes;
