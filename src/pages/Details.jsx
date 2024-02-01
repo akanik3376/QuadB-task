@@ -58,7 +58,7 @@ const Details = () => {
         summary,
 
     } = show || '';
-    console.log(show)
+    // console.log(show)
     return (
         <div className="container mt-5">
             <div className="row">

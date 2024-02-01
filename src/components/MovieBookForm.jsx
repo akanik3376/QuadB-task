@@ -3,9 +3,10 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 const MovieBookForm = ({ show, handleClose, movieName, id }) => {
-    console.log(id)
+
     const [userDetails, setUserDetails] = useState({
         name: '',
         email: '',
@@ -14,29 +15,34 @@ const MovieBookForm = ({ show, handleClose, movieName, id }) => {
     const [validationErrors, setValidationErrors] = useState({
         name: '',
         email: '',
+        movieName: '',  // Add movieName validation error state
+        movieId: '',    // Add movieId validation error state
     });
-
+    const navigate = useNavigate()
     const handleBookTicket = () => {
         // Validate form fields
-        if (!userDetails.name || !userDetails.email) {
+        if (!userDetails.name || !userDetails.email || !movieName || !id) {
             setValidationErrors({
                 name: userDetails.name ? '' : 'Name is required',
                 email: userDetails.email ? '' : 'Email is required',
+                movieName: movieName ? '' : 'Movie name is required',
+                movieId: id ? '' : 'Movie ID is required',
             });
             return;
         }
 
-        // Save user details to local storage
-        localStorage.setItem('userDetails', JSON.stringify(userDetails));
+        const bookInfo = { name: userDetails.name, email: userDetails.email, movieName, movieId: id };
 
-        // Save movie details to local storage
-        localStorage.setItem('movieDetails', JSON.stringify({ movieName, id }));
+
+        // Save user details to local storage
+        localStorage.setItem('bookInfo', JSON.stringify(bookInfo));
 
         // Additional actions when booking a ticket
         console.log('Booking ticket:', userDetails);
 
         // Close the modal after booking the ticket
         handleClose();
+        navigate('/my-booking')
     };
 
     return (
@@ -45,7 +51,7 @@ const MovieBookForm = ({ show, handleClose, movieName, id }) => {
                 <Modal.Title>{`Book Ticket for ${movieName}`}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>{`Movie: ${movieName},`}</p>
+                <p>{`Movie: ${movieName}, ID: ${id}`}</p>
                 <Form>
                     <Form.Group controlId="formName">
                         <Form.Label>Name</Form.Label>

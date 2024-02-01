@@ -1,0 +1,33 @@
+/* styles.css */
+
+.colorful-text {
+    display: inline-block;
+}
+
+.red {
+    color: red;
+}
+
+.orange {
+    color: orange;
+}
+
+.black {
+    color: black;
+}
+
+.green {
+    color: green;
+}
+
+.blue {
+    color: blue;
+}
+
+.indigo {
+    color: indigo;
+}
+
+.violet {
+    color: violet;
+}
