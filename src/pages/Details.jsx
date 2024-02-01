@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { CiBookmark } from 'react-icons/ci';
-import { IoMdHome } from 'react-icons/io';
 import MovieBookForm from '../components/MovieBookForm';
-import '../css/button.css';
+import '../CSSFile/button.css';
 
 const Details = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
-    const [show, setShow] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,93 +27,90 @@ const Details = () => {
         fetchData();
     }, [id]);
 
-    const { name, image, genres, language, network, averageRuntime, schedule, premiered, ended, officialSite, summary } =
-        show || '';
 
-    const handleOpenForm = () => {
-        setIsFormOpen(true);
-    };
 
-    const handleCloseForm = () => {
-        setIsFormOpen(false);
-    };
+    const handleClose = () => setIsFormOpen(false);
+    const handleShow = () => setIsFormOpen(true);
 
+    if (loading) {
+        return (
+            <div className="container mt-5 text-center">
+                <BeatLoader size={15} color="#36D7B7" loading={loading} />
+            </div>
+        );
+    }
+
+    if (!show) {
+        return <div className="container mt-5">Show not found</div>;
+    }
+
+    const {
+        averageRuntime,
+        ended,
+        genres,
+        image,
+        language,
+        name,
+        network,
+        premiered,
+        officialSite,
+        schedule,
+        summary,
+
+    } = show || '';
+    console.log(show)
     return (
         <div className="container mt-5">
-            {loading && (
-                <div className="text-center">
-                    <BeatLoader size={15} color="#36D7B7" loading={loading} />
+            <div className="row">
+                <div className="col-md-4">
+                    <img src={image?.original} alt={name} className="img-fluid" />
                 </div>
-            )}
+                <div className="col-md-8">
+                    <h1>{name}</h1>
+                    <p>
+                        <strong>Genres:</strong> {genres?.join(', ')}
+                    </p>
+                    <p>
+                        <strong>Language:</strong> {language}
+                    </p>
+                    <p>
+                        <strong>Network:</strong> {network?.name}
+                    </p>
+                    <p>
+                        <strong>Runtime:</strong> {averageRuntime} minutes
+                    </p>
+                    <p>
+                        <strong>Schedule:</strong> {schedule?.days.join(', ')} at {schedule?.time}
+                    </p>
+                    <p>
+                        <strong>Premiered:</strong> {premiered}
+                    </p>
+                    <p>
+                        <strong>Ended:</strong> {ended}
+                    </p>
+                    <p>
+                        <strong>Official Site:</strong>{' '}
+                        <a href={officialSite} target="_blank" rel="noopener noreferrer">
+                            {officialSite}
+                        </a>
+                    </p>
+                    <button onClick={() => handleShow()} className="btn book-now-button">
+                        <CiBookmark /> Book Now
+                    </button>
+                    <button className="btn back-to-home-button">
+                        <a href="/">Back To Home</a>
+                    </button>
+                </div>
+            </div>
+            <div className="row mt-3">
+                <div className="col">
+                    <h2>Summary</h2>
+                    <p>{summary}</p>
+                </div>
+            </div>
 
-            {!loading && !show && <div className="container mt-5">Show not found</div>}
+            <MovieBookForm show={isFormOpen} movieName={name} id={id} handleClose={handleClose} />
 
-            {show && (
-                <>
-                    <Row>
-                        <Col md={4}>
-                            <Card>
-                                <Card.Img variant="top" src={image?.original} alt={name} />
-                            </Card>
-                        </Col>
-                        <Col md={8}>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>{name}</Card.Title>
-                                    <Card.Text>
-                                        <strong>Genres:</strong> {genres?.join(', ')}
-                                        <br />
-                                        <strong>Language:</strong> {language}
-                                        <br />
-                                        <strong>Network:</strong> {network?.name}
-                                        <br />
-                                        <strong>Runtime:</strong> {averageRuntime} minutes
-                                        <br />
-                                        <strong>Schedule:</strong> {schedule?.days.join(', ')} at {schedule?.time}
-                                        <br />
-                                        <strong>Premiered:</strong> {premiered}
-                                        <br />
-                                        <strong>Ended:</strong> {ended}
-                                        <br />
-                                        <strong>Official Site:</strong>{' '}
-                                        <a href={officialSite} target="_blank" rel="noopener noreferrer">
-                                            {officialSite}
-                                        </a>
-                                    </Card.Text>
-                                    <Button onClick={handleOpenForm} className="book-now-button">
-                                        <CiBookmark /> Book Now
-                                    </Button>
-                                    <Button variant="secondary" className="back-to-home-button">
-                                        <IoMdHome /> <a href="/">Back To Home</a>
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
-
-                    <Row className="mt-3">
-                        <Col>
-                            <h2>Summary</h2>
-                            <p>{summary}</p>
-                        </Col>
-                    </Row>
-
-                    {/* React Modal */}
-                    <Modal
-                        show={isFormOpen}
-                        onHide={handleCloseForm}
-                        centered
-                        contentClassName="custom-modal-content"
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Book Movie Ticket</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <MovieBookForm onClose={handleCloseForm} movieName={name} />
-                        </Modal.Body>
-                    </Modal>
-                </>
-            )}
         </div>
     );
 };
