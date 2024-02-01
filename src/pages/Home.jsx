@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import Container from '../Shard/Container';
 import Card from '../components/home/Card';
+import { BeatLoader } from "react-spinners";
 
 const Home = () => {
     const { data: shows = [], isLoading, isError } = useQuery({
@@ -24,7 +25,9 @@ const Home = () => {
                 <h2>List of TV Shows </h2>
 
                 {isLoading ? (
-                    <p>Loading...</p>
+                    <div className="text-center">
+                        <BeatLoader size={15} color={"#36D7B7"} loading={isLoading} />
+                    </div>
                 ) : isError ? (
                     <p>Error fetching data</p>
                 ) : (
