@@ -24,8 +24,10 @@
     "react-modal": "^3.16.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.21.3",
+    "react-slick": "^0.30.1",
     "react-spinners": "^0.13.8",
     "react-table": "^7.8.0",
+    "slick-carousel": "^1.8.1",
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
